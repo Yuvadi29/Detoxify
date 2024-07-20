@@ -2,12 +2,16 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/user.routes");
+const topicRoutes = require("./routes/topics.routes");
+const youtubeRoutes = require("./routes/youtube.routes");
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use('/auth', authRoutes);
+app.use('/topics', topicRoutes);
+app.use('/youtube', youtubeRoutes);
 
 const PORT = process.env.PORT || 5000;
 
