@@ -3,12 +3,15 @@
 import AuthContext from '@/context/AuthContext';
 import axios from '../../utils/axios';
 import { useContext, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const topics = ['DevOps', 'Rust', 'GoLang', 'React', 'Node.js'];
 
 export default function SelectTopic() {
     const [selectedTopics, setSelectedTopics] = useState([]);
     const { user } = useContext(AuthContext);
+    const router = useRouter();
+
 
     const toggleTopic = (topic) => {
         setSelectedTopics((prev) =>
@@ -26,6 +29,7 @@ export default function SelectTopic() {
         try {
             await axios.post('/topics/select', { topics: selectedTopics });
             alert('Preferences saved Successfully');
+            router.push('/');
         } catch (error) {
             console.log("Failed to save Preferences: ", error);
         }
@@ -38,7 +42,7 @@ export default function SelectTopic() {
                 {topics.map((topic) => (
                     <button
                         key={topic}
-                        className={`p-4 border rounded cursor-pointer ${selectedTopics.includes(topic) ? 'bg-blue-600 text-white' : 'bg-gray-600'
+                        className={`p-4 border rounded cursor-pointer ${selectedTopics.includes(topic) ? 'bg-blue-600 text-white' : 'bg-gray-100'
                             }`}
                         onClick={() => toggleTopic(topic)}
                     >
