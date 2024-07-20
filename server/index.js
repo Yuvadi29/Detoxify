@@ -4,10 +4,12 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/user.routes");
 const topicRoutes = require("./routes/topics.routes");
 const youtubeRoutes = require("./routes/youtube.routes");
+const cors = require("cors");
 
 dotenv.config();
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/topics', topicRoutes);
