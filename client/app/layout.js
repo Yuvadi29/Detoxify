@@ -12,10 +12,14 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <AuthProvider>
-          <Navbar />
-          {children}
+          <div className="flex">
+            <Navbar />
+          </div>
+          <div className="ml-64">
+            {children}
+          </div>
         </AuthProvider>
       </body>
-    </html>
+    </html >
   );
 }

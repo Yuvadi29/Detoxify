@@ -1,17 +1,27 @@
-"use client"
+"use client";
 
 import AuthContext from '@/context/AuthContext';
 import axios from '../../utils/axios';
 import { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
-const topics = ['DevOps', 'Rust', 'GoLang', 'React', 'Node.js'];
+const topics = [
+    'DevOps', 'Rust', 'GoLang', 'React', 'Node.js', 'NextJs', 'Angular',
+    'MERN', 'Docker', 'Kubernetes', 'Python', 'Java', 'C#', 'Swift',
+    'Flutter', 'TypeScript', 'Vue.js', 'Svelte', 'GraphQL', 'Tailwind CSS',
+    'Firebase', 'AWS', 'Azure', 'GCP', 'Machine Learning', 'Data Science',
+    'Blockchain', 'Cybersecurity', 'Mobile Development', 'Game Development',
+    'AR/VR', 'CI/CD', 'Microservices', 'Serverless', 'APIs', 'WebAssembly',
+    'Quantum Computing', 'Big Data', 'IoT', 'AI', 'ElasticSearch',
+    'Redux', 'Sass', 'Webpack', 'Babel', 'Electron', 'Unity', 'Unreal Engine'
+];
 
-export default function SelectTopic() {
+
+const SelectTopic = () => {
     const [selectedTopics, setSelectedTopics] = useState([]);
     const { user } = useContext(AuthContext);
     const router = useRouter();
-
 
     const toggleTopic = (topic) => {
         setSelectedTopics((prev) =>
@@ -36,25 +46,31 @@ export default function SelectTopic() {
     };
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Select Topics of Interest</h1>
-            <div className="grid grid-cols-2 gap-4">
-                {topics.map((topic) => (
-                    <button
-                        key={topic}
-                        className={`p-4 border rounded cursor-pointer ${selectedTopics.includes(topic) ? 'bg-blue-600 text-white' : 'bg-gray-100'
-                            }`}
-                        onClick={() => toggleTopic(topic)}
-                    >
-                        {topic}
-                    </button>
-                ))}
+        <>
+            <h1 className="text-4xl font-bold mb-12 text-center text-gray-800 flex justify-center items-center">Select Topics of Interest</h1>
+            <div className="container mx-auto p-4 flex-1 flex justify-center items-center">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    {topics.map((topic) => (
+                        <Button
+                            key={topic}
+                            variant="outline"
+                            className={`p-4 border rounded-lg cursor-pointer text-lg font-semibold transition-all duration-200 ${selectedTopics.includes(topic) ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-100 text-gray-800 hover:bg-gray-200 hover:shadow-md'
+                                }`}
+                            onClick={() => toggleTopic(topic)}
+                        >
+                            {topic}
+                        </Button>
+                    ))}
+                </div>
             </div>
-            <button
+            <Button
                 onClick={savePreferences}
-                className="mt-6 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                className="mt-6 px-6 py-3 flex justify-center ml-[35rem] items-center text-white rounded-lg shadow-md transition-all"
+            >
                 Save Preferences
-            </button>
-        </div>
+            </Button>
+        </>
     );
-}
+};
+
+export default SelectTopic;
