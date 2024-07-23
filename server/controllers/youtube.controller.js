@@ -12,11 +12,28 @@ const getVideos = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const topicQueries = user.selectedTopics.map(topic => `q=${encodeURIComponent(topic)}`).join('&');
+        const videoResults = [];
 
-        const response = await axios.get(`https://www.googleapis.com/youtube/v3/search?${topicQueries}&part=snippet&type=video&key=${process.env.YOUTUBE_API_KEY}`);
+        for (const topic of user.selectedTopics) {
+            const response = await axios.get(`https://www.googleapis.com/youtube/v3/search`, {
+                params: {
+                    q: topic,
+                    part: 'snippet',
+                    type: 'video',
+                    maxResults: 5,
+                    key: process.env.YOUTUBE_API_KEY
+                }
+            });
 
-        res.status(200).json(response.data);
+            videoResults.push(...response.data.items);
+        }
+
+        // const topicQueries = user.selectedTopics.map(topic => `q=${encodeURIComponent(topic)}`).join('&');
+
+        // const response = await axios.get(`https://www.googleapis.com/youtube/v3/search?${topicQueries}&part=snippet&type=video&key=${process.env.YOUTUBE_API_KEY}`);
+
+        // res.status(200).json(response.data);
+        res.status(200).json(videoResults);
 
     } catch (error) {
         res.status(500).json({ message: 'Something went wrong' });

@@ -18,8 +18,8 @@ export default function Home() {
       }
       try {
         const response = await axios.get('/youtube/videos');
-        setVideos(response.data.items);
-        console.log(response.data.items);
+        setVideos(response.data);
+        console.log(response.data);
       } catch (error) {
         console.log('Failed to Fetch Videos: ', error);
       } finally {
